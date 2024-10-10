@@ -1,0 +1,38 @@
+#!/bin/bash
+
+source eudora.venv/bin/activate
+
+if [ $# -lt 2 ]
+then
+    echo "Usage: eudora2tbird <rescued_directory> <destination_directory>"
+    echo "   Destination should be empty - this will overwrite any contents"
+    exit 1
+fi
+
+src=$(echo $1 | sed 's:/*$::')
+dest=$(echo $2 | sed 's:/*$::')
+
+echo $src
+echo $dest
+echo
+
+IFS=$'\n'
+
+for dir in $(find $src -type d)
+do
+#	echo $dir
+	for mbx in $(ls $dir/*.mbx 2> /dev/null)
+	do
+		mkdir -p $(echo $dir | sed "s/$src/$dest/" | sed "s/.fol/.sbd/g")
+		touch $(echo $dir | sed "s/$src/$dest/" | sed "s/.fol/.sbd/g" | rev | sed "s/dbs.//" | rev)   # Remove last .sbd
+		echo -n $mbx
+		echo -n " --> "
+		dest_mbox=$(echo $mbx | sed "s/$src/$dest/" | sed "s/.mbx//" | sed "s/.fol/.sbd/g")
+		echo $dest_mbox
+		python3 eudora2tbird.py -m "$mbx" -o "$dest_mbox" -a "$src/attach/" -e "$src/Embedded/"
+		if [ $? -ne 0 ]
+		then
+			exit 1
+		fi
+	done
+done
