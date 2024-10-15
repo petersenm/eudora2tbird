@@ -8,7 +8,8 @@ code has only been tested on a Linux platform (Ubuntu 22.04) but in
 principal, should run anywhere (I think...).
 
 ## Setup
-Create Python 3 venv
+Create a Python 3 venv.  Call it eudora.venv.  If you name it something
+else, the Bash script used below needs to be updated accordingly.
 
 Install these packages:
 - python-dateutil
@@ -27,6 +28,9 @@ These instructions assume the Eudora mail directory is called Mail
     EUDRESCU.EXE Mail -o=Mail.rescue -x=.mbx -f- -g-
 
     This massages and fixes the Eudora mailboxes for the next steps.
+
+4.  Copy (or symlink) the attach/ and Embedded/ directories into the
+    Mail.resuce directory.  This is not done automatically by Eudora Rescue.
 
 4.  Create a blank directory for the converted email:  Mail.tbird
 
