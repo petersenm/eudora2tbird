@@ -50,9 +50,9 @@ class MboxReader:
             lineOrig = self.handle.readline()
             line = lineOrig
             # Remove wrapping [] from Message-ID header since that causes exception in email parser
-            line = re.sub(b'^(message-id:\s*)<[\[@<](.*?)\]?>', b'\g<1><\g<2>>', line, flags=re.I)
+            line = re.sub(b'^(message-id:\\s*)<[\\[@<](.*?)\\]?>', b'\\g<1><\\g<2>>', line, flags=re.I)
             # Remove multipart/... from content-type if not already removed by Eudora Rescue
-            line = re.sub(b'^(content-type:\s*)multipart/\w+;(.*)', b'\g<1>\g<2>', line, flags=re.I)
+            line = re.sub(b'^(content-type:\\s*)multipart/\\w+;(.*)', b'\\g<1>\\g<2>', line, flags=re.I)
             if(line != lineOrig):
                 print(MAGENTA + "Line modified:\n    " + str(lineOrig) + "\n    " + str(line) + DEFAULT)
             if(re.match(b'date:', line, re.IGNORECASE)):
