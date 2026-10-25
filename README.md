@@ -22,7 +22,7 @@ These instructions assume the Eudora mail directory is called Mail
 
 2.  Create a blank directory for the resuced email:  Mail.rescue
 
-3.  From Windows, run the Eudora Rescue script with the following options
+3.  From Windows (cmd, not PowerShell), run the Eudora Rescue script with the following options
     (modified accordingly for the directory names)
 
     EUDRESCU.EXE Mail -o=Mail.rescue -x=.mbx -f- -g-
